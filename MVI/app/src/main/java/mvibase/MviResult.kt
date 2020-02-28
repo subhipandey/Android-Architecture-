@@ -1,0 +1,3 @@
+package mvibase
+
+interface MviResult
