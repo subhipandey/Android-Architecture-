@@ -1,10 +1,12 @@
 <component name="libraryTable">
   <library name="Gradle: com.jakewharton.rxbinding2:rxbinding-support-v4:2.0.0@aar">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/jetified-rxbinding-support-v4-2.0.0.aar/c30197990c3d5c0551fe5c0a6c148023/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/jetified-rxbinding-support-v4-2.0.0.aar/c30197990c3d5c0551fe5c0a6c148023/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/2378c2132cb35ad5dc310abe8092bcfe/jetified-rxbinding-support-v4-2.0.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/2378c2132cb35ad5dc310abe8092bcfe/jetified-rxbinding-support-v4-2.0.0/res" />
     </CLASSES>
-    <JAVADOC />
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jakewharton.rxbinding2/rxbinding-support-v4/2.0.0/5ece2eacb316512de3d31502ab35464164ce37ad/rxbinding-support-v4-2.0.0-javadoc.jar!/" />
+    </JAVADOC>
     <SOURCES>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jakewharton.rxbinding2/rxbinding-support-v4/2.0.0/96b14de1ecab08578a768af8ea8e2362f561ae77/rxbinding-support-v4-2.0.0-sources.jar!/" />
     </SOURCES>
