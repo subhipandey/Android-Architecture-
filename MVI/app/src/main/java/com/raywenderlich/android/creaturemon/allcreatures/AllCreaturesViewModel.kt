@@ -2,19 +2,57 @@ package com.raywenderlich.android.creaturemon.allcreatures
 
 import android.database.Observable
 import androidx.lifecycle.ViewModel
+import com.raywenderlich.android.creaturemon.allcreatures.AllCreaturesAction.*
+import com.raywenderlich.android.creaturemon.allcreatures.AllCreaturesIntent.*
 import com.raywenderlich.android.creaturemon.allcreatures.AllCreaturesResult.*
+import com.raywenderlich.android.creaturemon.util.notOfType
+import io.reactivex.ObservableSource
+import io.reactivex.ObservableTransformer
+import io.reactivex.subjects.PublishSubject
 import mvibase.MviViewModel
 import java.util.function.BiFunction
 
 class  AllCreaturesViewModel(
         private val actionProcessorHolder: AllCreaturesProcessorHolder
 ) : ViewModel(), MviViewModel<AllCreaturesIntent, AllCreaturesViewState> {
-    override fun processIntents(intents: Observable<AllCreaturesIntent>) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
+    private val intentsSubject: PublishSubject<AllCreaturesIntent> = PublishSubject.create()
+    private val statesObservable: Observable<AllCreaturesViewState> = Compose()
+
+    private val intentFilter: ObservableTransformer<AllCreaturesIntent, AllCreaturesIntent>
+    get() = ObservableTransformer { intents ->
+        intents.publish{ shared ->
+            Observable.merge(
+                    shared.ofType(LoadAllCreaturesIntent::class.java).take(1),
+                    shared.notOfType(LoadAllCreaturesIntent::class.java)
+            )
+        }
     }
 
-    override fun states(): Observable<AllCreaturesViewState> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
+
+    override fun processIntents(intents: Observable<AllCreaturesIntent>) {
+        intents.subscribe(intentsSubject)
+    }
+
+    override fun states(): Observable<AllCreaturesViewState> = statesObservable
+
+    private fun compose(): Observable<AllCreaturesViewState> {
+        return intentsSubject
+                .compose(intentFilter)
+                .map(this::actionFromIntent)
+                .compose(actionProcessorHolder.actionProcessor)
+                .scan(AllCreaturesViewState.idle(), reducer)
+                .distinctUntilChanged()
+                .replay(1)
+                .autoConnect(0)
+    }
+
+    private fun actionFromIntent(intent: AllCreaturesIntent): AllCreaturesAction {
+        return when (intent) {
+            is LoadAllCreaturesIntent -> LoadAllCreaturesAction
+            is ClearAllCreaturesIntent -> ClearAllCreaturesAction
+        }
     }
 
     companion object {

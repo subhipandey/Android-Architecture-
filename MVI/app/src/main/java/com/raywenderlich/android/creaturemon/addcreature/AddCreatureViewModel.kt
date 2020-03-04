@@ -3,21 +3,49 @@ package com.raywenderlich.android.creaturemon.addcreature
 import android.database.Observable
 import androidx.constraintlayout.solver.widgets.ConstraintAnchor
 import androidx.lifecycle.ViewModel
+import com.raywenderlich.android.creaturemon.addcreature.AddCreatureAction.*
+import com.raywenderlich.android.creaturemon.addcreature.AddCreatureIntent.*
 import com.raywenderlich.android.creaturemon.addcreature.AddCreatureResult.*
 import com.raywenderlich.android.creaturemon.data.model.CreatureAttributes
 import com.raywenderlich.android.creaturemon.data.model.CreatureGenerator
+import io.reactivex.subjects.PublishSubject
 import mvibase.MviViewModel
 import java.util.function.BiFunction
 
 class AddCreatureViewModel (
         private val actionProcessHolder: AddCreatureProcessorHolder
 ) : ViewModel(), MviViewModel<AddCreatureIntent, AddCreatureViewState> {
+    private val intentsSubject: PublishSubject<AddCreatureIntent> = PublishSubject.create()
+    private val statesObservable: Observable<AddCreatureViewState> = compose()
     override fun processIntents(intents: Observable<AddCreatureIntent>) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        intents.subscribe(intentsSubject)
     }
 
-    override fun states(): Observable<AddCreatureViewState> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun states(): Observable<AddCreatureViewState> = statesObservable
+
+    private fun compose(): io.reactivex.Observable<AddCreatureViewState> {
+        return intentsSubject
+                .map(this::actionFromIntent)
+                .compose(actionProcessHolder.actionProcessor)
+                .scan(AddCreatureViewState.default(), reducer)
+                .distinctUntilChanged()
+                .replay(1)
+                .autoConnect(0)
+    }
+
+    private fun actionFromIntent(intent: AddCreatureIntent): AddCreatureAction {
+        return when (intent) {
+            is AvatarIntent -> AvatarAction(intent.drawable)
+            is NameIntent -> NameAction(intent.name)
+            is IntelligenceIntent -> IntelligenceAction(intent.intelligenceIndex)
+            is StrengthIntent -> StrengthAction(intent.strengthIndex)
+            is EnduranceIntent -> EnduranceAction(intent.enduranceIndex)
+            is SaveIntent -> SaveAction(
+                    intent.drawable, intent.name, intent.intelligenceIndex, intent.strengthIndex,
+                    intent.enduranceIndex)
+
+
+        }
     }
 
     companion object {

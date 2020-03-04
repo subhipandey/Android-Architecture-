@@ -36,14 +36,34 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
+import androidx.lifecycle.ViewModelProviders
 import com.raywenderlich.android.creaturemon.R
 import com.raywenderlich.android.creaturemon.addcreature.CreatureActivity
+import com.raywenderlich.android.creaturemon.allcreatures.AllCreaturesIntent.*
+import com.raywenderlich.android.creaturemon.util.CreaturemonViewModelFactory
+import io.reactivex.Observable
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.activity_all_creatures.*
 import kotlinx.android.synthetic.main.content_all_creatures.*
+import mvibase.MviView
+import mvibase.MviViewModel
 
-class AllCreaturesActivity : AppCompatActivity() {
+class AllCreaturesActivity : AppCompatActivity(),
+        MviView<AllCreaturesIntent, AllCreaturesViewState> {
 
   private val adapter = CreatureAdapter(mutableListOf())
+
+  private val clearAllCreaturesPublisher =
+          PublishSubject.create<AllCreaturesIntent.ClearAllCreaturesIntent>()
+
+  private val disposables = CompositeDisposable()
+
+  private val  viewModel: AllCreaturesViewModel by lazy(LazyThreadSafetyMode.NONE) {
+    ViewModelProviders
+            .of(this, CreaturemonViewModelFactory.getInstance(this))
+            .get(AllCreaturesViewModel::class.java)
+  }
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -56,6 +76,21 @@ class AllCreaturesActivity : AppCompatActivity() {
     fab.setOnClickListener {
       startActivity(Intent(this, CreatureActivity::class.java))
     }
+  }
+
+  override fun onStart() {
+    super.onStart()
+    bind()
+  }
+
+  override fun onStop() {
+    super.onStop()
+    disposables.clear()
+  }
+
+  private fun bind() {
+    disposables.add(viewModel.states().subscribe(this::render))
+    viewModel.processIntents(intents())
   }
 
   override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -72,4 +107,30 @@ class AllCreaturesActivity : AppCompatActivity() {
       else -> super.onOptionsItemSelected(item)
     }
   }
+
+  override fun intent(): Observable<AllCreaturesIntent> {
+    return Observable.merge(
+            loadIntent(),
+            clearIntent()
+    )
+  }
+
+  override fun render(state: AllCreaturesViewState) {
+    TODO("Not yet implemented")
+  }
+
+  private fun loadIntent(): Observable<LoadAllCreaturesIntent>{
+    return Observable.just(LoadAllCreaturesIntent)
+
+  }
+
+  private fun clearIntent(): Observable<AllCreaturesIntent.ClearAllCreaturesIntent> {
+    return clearAllCreaturesPublisher
+  }
+
+  companion object {
+    private const val TAG = "AllCreaturesActivity"
+  }
+
+
 }
