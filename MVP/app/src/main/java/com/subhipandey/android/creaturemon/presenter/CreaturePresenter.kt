@@ -1,8 +1,10 @@
 package com.subhipandey.android.creaturemon.presenter
 
 import com.subhipandey.android.creaturemon.model.*
+import com.subhipandey.android.creaturemon.model.room.RoomRepository
 
-class CreaturePresenter(private val generator: CreatureGenerator = CreatureGenerator())
+class CreaturePresenter(private val generator: CreatureGenerator = CreatureGenerator(),
+                        private val repository: CreatureRepository = RoomRepository() )
     : BasePresenter<CreatureContract.View>(), CreatureContract.Presenter {
 
     private var name = ""
@@ -42,5 +44,18 @@ class CreaturePresenter(private val generator: CreatureGenerator = CreatureGener
         val attributes = CreatureAttributes(intelligence, strength, endurance)
         creature = generator.generateCreature(attributes, name, drawable)
         getView()?.showHitPoints(creature.hitPoints.toString())
+    }
+    private fun canSaveCreature(): Boolean {
+        return intelligence !=0 && strength != 0 && endurance != 0 &&
+                name.isNotEmpty() && drawable != 0
+    }
+
+    override fun saveCreature() {
+        if (canSaveCreature()) {
+            repository.saveCreature(creature)
+            getView()?.showCreatureSaved()
+        } else {
+            getView()?.showCreatureSaveError()
+        }
     }
 }

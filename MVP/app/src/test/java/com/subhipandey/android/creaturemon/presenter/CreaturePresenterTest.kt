@@ -1,9 +1,6 @@
 package com.subhipandey.android.creaturemon.presenter
 
-import com.subhipandey.android.creaturemon.model.AttributeType
-import com.subhipandey.android.creaturemon.model.Creature
-import com.subhipandey.android.creaturemon.model.CreatureAttributes
-import com.subhipandey.android.creaturemon.model.CreatureGenerator
+import com.subhipandey.android.creaturemon.model.*
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
@@ -23,7 +20,7 @@ class CreaturePresenterTest {
     @Before
     fun setup() {
         MockitoAnnotations.initMocks(this)
-        presenter = CreaturePresenter(mockGenerator)
+        presenter = CreaturePresenter(mockGenerator, mockRepository)
         presenter.setView(view)
     }
 
@@ -57,4 +54,7 @@ class CreaturePresenterTest {
        presenter.attributeSelected(AttributeType.ENDURANCE, 2)
        verify(view, times(1)).showHitPoints("28")
    }
+
+    @Mock
+    lateinit var mockRepository: CreatureRepository
 }
