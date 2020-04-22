@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    android:id="@+id/nav_graph"
+    app:startDestination="@+id/bookSearchFragment">
+
+    <fragment
+        android:id="@+id/bookSearchFragment"
+        android:name="com.subhipandey.android.bookmanstreasure.ui.booksearch.BookSearchFragment"
+        android:label="Book Search Fragment"
+        tools:layout="@layout/fragment_book_search">
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/workDetailsFragment"
+        android:name="com.subhipandey.android.bookmanstreasure.ui.workdetails.WorkDetailsFragment"
+        android:label="work_details_fragment"
+        tools:layout="@layout/fragment_work_details">
+
+        <action
+            android:id="@+id/actionBookDetails"
+            app:destination="@id/workDetailsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+
+        <action
+            android:id="@+id/actionShowAuthor"
+            app:destination="@id/authorDetails" />
+    </fragment>
+    <deepLink app:uri="bookmanstreasure://home/favorites" />
+    <fragment
+        android:id="@+id/favoritesFragment"
+        android:name="com.subhipandey.android.bookmanstreasure.ui.favorites.FavoritesFragment"
+        android:label="FavoritesFragment" >
+        <action
+            android:id="@+id/actionBookDetails"
+            app:destination="@id/workDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/bookDetailsFragment"
+        android:name="com.subhipandey.android.bookmanstreasure.ui.bookdetails.BookDetailsFragment"
+        android:label="BookDetailsFragment" >
+        <action
+            android:id="@+id/actionShowEdition"
+            app:destination="@id/workDetailsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/launcherFragment"
+        app:startDestination="@+id/launcherFragment"
+
+        android:name="com.subhipandey.android.bookmanstreasure.ui.launcher.LauncherFragment"
+        android:label="Blank"
+        tools:layout="@layout/fragment_book_details">
+        <action
+            android:id="@+id/actionBookSearch"
+            app:destination="@id/bookSearchFragment" />
+        <action
+            android:id="@+id/actionFavorites"
+            app:destination="@id/favoritesFragment" />
+    </fragment>
+
+
+    <author
+        android:id="@+id/authorDetails"
+        />
+
+</navigation>
