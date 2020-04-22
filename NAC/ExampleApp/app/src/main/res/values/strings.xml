@@ -1,0 +1,23 @@
+<resources>
+  <string name="app_name">Love Letter</string>
+  <string name="menu_sent">Sent</string>
+  <string name="menu_inbox">Inbox</string>
+  <string name="edit_profile">Edit Profile</string>
+  <string name="action_push">Push</string>
+  <string name="action_send">Send</string>
+  <string name="agree">Agree</string>
+  <string name="terms_of_service">Terms of Service</string>
+  <string name="privacy_policy">Privacy Policy</string>
+  <string name="agreement">Agreement</string>
+  <string name="ps">PS</string>
+  <string name="description">Description</string>
+  <string name="title">Title</string>
+  <string name="recipient">Recipient</string>
+  <string name="name">Name</string>
+  <string name="email">Email</string>
+  <string name="save">Save</string>
+  <string name="to_email">To: %1$s</string>
+  <string name="from_email">From: %1$s</string>
+  <string name="presentation">Presentation</string>
+  <string name="create_letter">Create Letter</string>
+</resources>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/inboxFragment">
+
+    <fragment
+        android:id="@+id/inboxFragment"
+        android:name="com.subhipandey.android.loveletter.fragment.InboxFragment"
+        android:label="@string/menu_inbox"
+        tools:layout="@layout/fragment_inbox">
+        <action
+            android:id="@+id/presentLetter"
+            app:destination="@id/presentationFragment"/>
+    </fragment>
+    <fragment
+        android:id="@+id/sentFragment"
+        android:name="com.subhipandey.android.loveletter.fragment.SentFragment"
+        android:label="@string/menu_sent"
+        tools:layout="@layout/fragment_sent">
+        <action
+            android:id="@+id/presentLetter"
+            app:destination="@id/presentationFragment"/>
+    </fragment>
+    <fragment
+        android:id="@+id/createLetterFragment"
+        android:name="com.subhipandey.android.loveletter.fragment.CreateLetterFragment"
+        android:label="@string/create_letter"
+        tools:layout="@layout/fragment_create_letter"/>
+    <dialog
+        android:id="@+id/editProfileFragment"
+        android:name="com.subhipandey.android.loveletter.fragment.EditProfileFragment"
+        android:label="@string/edit_profile"
+        tools:layout="@layout/fragment_edit_profile"/>
+    <fragment
+        android:id="@+id/presentationFragment"
+        android:name="com.subhipandey.android.loveletter.fragment.PresentationFragment"
+        android:label="@string/presentation"
+        tools:layout="@layout/fragment_presentation">
+        <argument
+            android:name="letter"
+            app:argType="string" />
+    </fragment>
+</navigation>

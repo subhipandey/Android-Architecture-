@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:showIn="navigation_view">
+
+  <group android:checkableBehavior="single">
+    <item
+        android:id="@+id/nav_inbox"
+        android:icon="@drawable/ic_inbox"
+        android:title="@string/menu_inbox"/>
+
+    <item
+        android:id="@+id/nav_sent"
+        android:icon="@drawable/ic_sent"
+        android:title="@string/menu_sent"/>
+
+  </group>
+
+  <item android:title="@string/agreement">
+    <menu>
+      <item
+          android:id="@+id/nav_privacy_policy"
+          android:icon="@drawable/ic_lock"
+          android:title="@string/privacy_policy"/>
+
+      <item
+          android:id="@+id/nav_terms_of_service"
+          android:icon="@drawable/ic_text"
+          android:title="@string/terms_of_service"/>
+
+    </menu>
+  </item>
+
+</menu>

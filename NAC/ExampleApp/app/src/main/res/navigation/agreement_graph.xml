@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/agreement_graph.xml">
+
+    <navigation
+        android:id="@+id/agreement_graph"
+        app:startDestination="@id/privacyPolicyFragment">
+
+        <fragment
+            android:id="@+id/privacyPolicyFragment"
+            android:name="com.subhipandey.android.loveletter.agreement.TermsOfServiceFragment"
+            android:label="@string/privacy_policy"
+            tools:layout="@layout/fragment_terms_of_service">
+            <action
+                android:id="@+id/action_privacyPolicyFragment_to_termsOfServiceFragment"
+                app:destination="@id/termsOfServiceFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/termsOfServiceFragment"
+            android:name="com.subhipandey.android.loveletter.agreement.TermsOfServiceFragment"
+            android:label="@string/terms_of_service"
+            tools:layout="@layout/fragment_terms_of_service"/>
+    </navigation>
+
+
+</navigation>
