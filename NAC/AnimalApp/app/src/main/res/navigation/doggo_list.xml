@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/doggoList"
+  app:startDestination="@id/doggoListFragment">
+
+  <fragment
+    android:id="@+id/doggoListFragment"
+    android:name="com.subhipandey.android.mylittledoggo.presentation.doggos.DoggoListFragment"
+    android:label="Many Doggos"
+    tools:layout="@layout/fragment_doggos_list">
+    <action
+        android:id="@+id/to_doggoFragment"
+        app:destination="@id/doggoFragment"
+        app:enterAnim="@anim/fragment_fade_enter"
+        app:exitAnim="@anim/fragment_fade_exit"
+        app:popEnterAnim="@anim/fragment_fade_enter"
+        app:popExitAnim="@anim/fragment_fade_exit" />
+  </fragment>
+
+  <fragment
+    android:id="@+id/doggoFragment"
+    android:name="com.subhipandey.android.mylittledoggo.presentation.doggodetail.DoggoFragment"
+    android:label="One Doggo"
+    tools:layout="@layout/fragment_doggo">
+    <argument
+      android:name="picture"
+      app:argType="string" />
+    <argument
+      android:name="isFavorite"
+      app:argType="boolean" />
+  </fragment>
+
+  <fragment
+    android:id="@+id/aboutFragment"
+    android:name="com.subhipandey.android.mylittledoggo.presentation.about.AboutFragment"
+    android:label="About"
+    tools:layout="@layout/fragment_about" />
+</navigation>

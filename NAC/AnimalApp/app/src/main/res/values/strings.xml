@@ -1,0 +1,8 @@
+<resources>
+  <string name="app_name">Dogs</string>
+  <string name="doggos">Doggos</string>
+  <string name="favorites">Favorites</string>
+  <string name="you_have_no_favorites_yet">You have no favorites yet 💔</string>
+  <string name="about">About</string>
+  <string name="made_by">Made with ❤️, by a 🐶 lover</string>
+</resources>
