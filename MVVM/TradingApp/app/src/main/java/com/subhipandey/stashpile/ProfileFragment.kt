@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.preference.PreferenceManager
 import com.subhipandey.stashpile.usecase.GetRecommendedStockUseCase
 import com.subhipandey.stashpile.usecase.GetStocksUseCase
@@ -92,6 +93,15 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         }
         .show()
   }
+
+  init {
+    lifecycleScope.launchWhenResumed {
+      if (isFirstProfileLaunch()) {
+        displayTipDialog()
+      }
+    }
+  }
+
 
   private fun recordProfileFirstLaunch() {
     val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())

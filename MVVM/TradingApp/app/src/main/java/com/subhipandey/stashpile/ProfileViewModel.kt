@@ -14,7 +14,7 @@ class ProfileViewModel(
     getStocksUseCase: GetStocksUseCase,
     private val getRecommendedStockUseCase: GetRecommendedStockUseCase) : ViewModel() {
 
-  val userInformation: LiveData<UserInformation> = getUserInformationUseCase.get()
+  val userInformation: LiveData<GetUserInformationUseCase.UserInformation> = getUserInformationUseCase.get()
   val totalValue: LiveData<Double> = getTotalValueUseCase.get()
   val stocks: LiveData<String> = getStocksUseCase.get()
   val recommendStock: LiveData<String> = getRecommendedStockUseCase.recommendedStock
@@ -23,11 +23,17 @@ class ProfileViewModel(
     getRecommendedStock()
   }
 
-  private fun getRecommendedStock() {
-    getRecommendedStockUseCase.get()
-  }
+    private fun getRecommendedStock() {
+        viewModelScope.launch {
+            getRecommendedStockUseCase.get()
+        }
+    }
 
-  fun refreshRecommendedStock() {
-    getRecommendedStockUseCase.refresh()
-  }
+
+    fun refreshRecommendedStock() {
+        viewModelScope.launch {
+            getRecommendedStockUseCase.refresh()
+        }
+    }
+
 }
